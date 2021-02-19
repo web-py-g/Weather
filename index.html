@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Погода на ближайший день</title>
+	<meta name="description" content="Узнай и отслеживай погоду в нужных тебе городах!">
+	<meta name="keywords" content="Погода, температура, Погода Спб, Погода москва, погода, погода спб, погода в москве">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&amp;display=swap" rel="stylesheet">
+</head>
+
+<body>
+	<header class="header">
+		<div class="wrapper">
+			<h1 class="header__titel">
+				Погода здесь
+			</h1>
+			<form action="#!" class="header__form">
+				<button class="refresh">
+					Обновить данные
+				</button>
+			</form>
+		</div>
+	</header>
+	<main>
+		
+		<section class="main__city">
+			<div class="wrapper">
+				<div class="main__city__info">
+					<h2 class="info__titel">Санкт-Петербург <span class="time"> 12:20</span></h2>
+					<img src="img/png/day_partial_cloud.png" alt="weather" class="info__img">
+					<span class="temp">
+						8&#176;C
+					</span>
+				</div>
+
+				<div class="main__city__desc">
+					<ul class="desc__list">
+						<li class="desc__list__item">
+							Ветер <span class="wind"> Легкий ветер, 2 м/с, С\З</span>
+						</li>
+						<li class="desc__list__item">
+							Облачность <span class="cloud">Облачно</span>
+						</li>
+						<li class="desc__list__item">
+							Давление <span class="pressure"> 716 мм.рт.ст.</span>
+						</li>
+						<li class="desc__list__item">
+							Влажность <span class="humidity"> 208&#176;</span>
+						</li>
+						<li class="desc__list__item">
+							Координаты <span class="coordinates"> [ 59.62, 30.22 ]</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+		<section class="favorites">
+			<div class="wrapper">
+				<div class="favorites__header">
+					<h2 class="favorites__header__titel">
+						Избранное:
+					</h2>
+					<form action="#!" class="favorites__form">
+						<input type="text" placeholder="Добавить новый город" class="favorites__form__input">
+						<button class="Add">
+							+
+						</button>
+					</form>
+				</div>
+			</div>
+		</section>
+
+
+
+	</main>
+
+
+</body>
+
+</html>
