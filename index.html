@@ -18,9 +18,12 @@
 				Погода здесь
 			</h1>
 			<form action="#!" class="header__form">
-				<button class="refresh">
+				<button id ="find-me" class="refresh">
 					Обновить данные
 				</button>
+				<p id = "status"></p>
+				<a id = "map-link" target="_blank"></a>
+
 				<i class="refresh__mobile">
 					
 				</i>
@@ -32,29 +35,29 @@
 		<section class="main__city">
 			<div class="wrapper">
 				<div class="main__city__info">
-					<h2 class="info__titel">Санкт-Петербург <span class="time"> 12:20</span></h2>
+					<h2 class="info__titel">Санкт-Петербург</h2><span class="time"> 12:20</span>
 					<img src="img/png/day_partial_cloud.png" alt="weather" class="info__img">
 					<span class="temp">
-						8&#176;C
+						
 					</span>
 				</div>
 
 				<div class="main__city__desc">
 					<ul class="desc__list">
 						<li class="desc__list__item">
-							Ветер <span class="wind"> Легкий ветер, 2 м/с, С\З</span>
+							<h4 class="list__item__text">Ветер </h4><span class="wind"> Легкий ветер, 2 м/с, С\З</span>
 						</li>
 						<li class="desc__list__item">
-							Облачность <span class="cloud">Облачно</span>
+							<h4 class="list__item__text">Облачность </h4><span class="cloud">Облачно</span>
 						</li>
 						<li class="desc__list__item">
-							Давление <span class="pressure"> 716 мм.рт.ст.</span>
+							<h4 class="list__item__text">Давление </h4><span class="pressure"> 716 мм.рт.ст.</span>
 						</li>
 						<li class="desc__list__item">
-							Влажность <span class="humidity"> 208&#176;</span>
+							<h4 class="list__item__text">Влажность </h4><span class="humidity"> %</span>
 						</li>
 						<li class="desc__list__item">
-							Координаты <span class="coordinates"> [ 59.62, 30.22 ]</span>
+							<h4 class="list__item__text">Координаты </h4><span class="coordinates"> [ 59.62, 30.22 ]</span>
 						</li>
 					</ul>
 				</div>
@@ -77,157 +80,158 @@
 				<ul class="favorites__list">
 					<li class="favorites__item">
 						<div class="favorites__item__header">
-							<h3 class="favorites__item__titel">Москва  <span class="favorites_temp">5&#176;C</span> </h3>
+							<h3 class="favorites__item__titel">Москва  </h3><span class="favorites_temp">5&#176;C</span> 
 							<img src="img/png/day.png" alt="day" class="item__img">
 							<form action="" class="favorites__item__form">
-								<button class="close">х</button>
+								<button class="close">+</button>
 							</form>
 						</div>
 						<ul class="favorites__item__descr">
 							<li class="item__descr__item">
-								Ветер <span class="wind"> Легкий ветер, 2 м/с, С\З</span>
+								<h4 class="list__item__text"> Ветер </h4><span class="wind"> Легкий ветер, 2 м/с, С\З</span>
 							</li>
 							<li class="item__descr__item">
-								Облачность <span class="cloud">Облачно</span>
+								<h4 class="list__item__text"> Облачность </h4><span class="cloud">Облачно</span>
 							</li>
 							<li class="item__descr__item">
-								Давление <span class="pressure"> 716 мм.рт.ст.</span>
+								<h4 class="list__item__text"> Давление </h4><span class="pressure"> 716 мм.рт.ст.</span>
 							</li>
 							<li class="item__descr__item">
-								Влажность <span class="humidity"> 208&#176;</span>
+								<h4 class="list__item__text"> Влажность </h4><span class="humidity"> 208&#176;</span>
 							</li>
 							<li class="item__descr__item">
-								Координаты <span class="coordinates"> [ 59.62, 30.22 ]</span>
+								<h4 class="list__item__text"> Координаты </h4><span class="coordinates"> [ 59.62, 30.22 ]</span>
+							</li>
+						</ul>
+					</li>
+
+					<li class="favorites__item">
+						<div class="favorites__item__header">
+							<h3 class="favorites__item__titel">Киров  </h3><span class="favorites_temp">6&#176;C</span> 
+							<img src="img/png/day.png" alt="day" class="item__img">
+							<form action="" class="favorites__item__form">
+								<button class="close">+</button>
+							</form>
+						</div>
+						<ul class="favorites__item__descr">
+							<li class="item__descr__item">
+								<h4 class="list__item__text"> Ветер </h4><span class="wind"> Легкий ветер, 2 м/с, С\З</span>
+							</li>
+							<li class="item__descr__item">
+								<h4 class="list__item__text"> Облачность </h4><span class="cloud">Облачно</span>
+							</li>
+							<li class="item__descr__item">
+								<h4 class="list__item__text"> Давление </h4><span class="pressure"> 716 мм.рт.ст.</span>
+							</li>
+							<li class="item__descr__item">
+								<h4 class="list__item__text"> Влажность </h4><span class="humidity"> 208&#176;</span>
+							</li>
+							<li class="item__descr__item">
+								<h4 class="list__item__text"> Координаты</h4> <span class="coordinates"> [ 59.62, 30.22 ]</span>
 							</li>
 						</ul>
 					</li>
 					<li class="favorites__item">
 						<div class="favorites__item__header">
-							<h3 class="favorites__item__titel">Киров  <span class="favorites_temp">6&#176;C</span> </h3>
+							<h3 class="favorites__item__titel">Надым  </h3><span class="favorites_temp">-50&#176;C</span> 
 							<img src="img/png/day.png" alt="day" class="item__img">
 							<form action="" class="favorites__item__form">
-								<button class="close">х</button>
+								<button class="close">+</button>
 							</form>
 						</div>
 						<ul class="favorites__item__descr">
 							<li class="item__descr__item">
-								Ветер <span class="wind"> Легкий ветер, 2 м/с, С\З</span>
+								<h4 class="list__item__text"> Ветер </h4><span class="wind"> Легкий ветер, 2 м/с, С\З</span>
 							</li>
 							<li class="item__descr__item">
-								Облачность <span class="cloud">Облачно</span>
+								<h4 class="list__item__text"> Облачность </h4><span class="cloud">Облачно</span>
 							</li>
 							<li class="item__descr__item">
-								Давление <span class="pressure"> 716 мм.рт.ст.</span>
+								<h4 class="list__item__text"> Давление </h4><span class="pressure"> 716 мм.рт.ст.</span>
 							</li>
 							<li class="item__descr__item">
-								Влажность <span class="humidity"> 208&#176;</span>
+								<h4 class="list__item__text"> Влажность </h4><span class="humidity"> 208&#176;</span>
 							</li>
 							<li class="item__descr__item">
-								Координаты <span class="coordinates"> [ 59.62, 30.22 ]</span>
+								<h4 class="list__item__text"> Координаты </h4><span class="coordinates"> [ 59.62, 30.22 ]</span>
 							</li>
 						</ul>
 					</li>
 					<li class="favorites__item">
 						<div class="favorites__item__header">
-							<h3 class="favorites__item__titel">Надым  <span class="favorites_temp">-50&#176;C</span> </h3>
+							<h3 class="favorites__item__titel">Сочи  </h3><span class="favorites_temp">12&#176;C</span> 
 							<img src="img/png/day.png" alt="day" class="item__img">
 							<form action="" class="favorites__item__form">
-								<button class="close">х</button>
+								<button class="close">+</button>
 							</form>
 						</div>
 						<ul class="favorites__item__descr">
 							<li class="item__descr__item">
-								Ветер <span class="wind"> Легкий ветер, 2 м/с, С\З</span>
+								<h4 class="list__item__text"> Ветер</h4> <span class="wind"> Легкий ветер, 2 м/с, С\З</span>
 							</li>
 							<li class="item__descr__item">
-								Облачность <span class="cloud">Облачно</span>
+								<h4 class="list__item__text"> Облачность </h4><span class="cloud">Облачно</span>
 							</li>
 							<li class="item__descr__item">
-								Давление <span class="pressure"> 716 мм.рт.ст.</span>
+								<h4 class="list__item__text"> Давление </h4><span class="pressure"> 716 мм.рт.ст.</span>
 							</li>
 							<li class="item__descr__item">
-								Влажность <span class="humidity"> 208&#176;</span>
+								<h4 class="list__item__text"> Влажность </h4><span class="humidity"> 208&#176;</span>
 							</li>
 							<li class="item__descr__item">
-								Координаты <span class="coordinates"> [ 59.62, 30.22 ]</span>
+								<h4 class="list__item__text"> Координаты </h4><span class="coordinates"> [ 59.62, 30.22 ]</span>
 							</li>
 						</ul>
 					</li>
 					<li class="favorites__item">
 						<div class="favorites__item__header">
-							<h3 class="favorites__item__titel">Сочи  <span class="favorites_temp">12&#176;C</span> </h3>
+							<h3 class="favorites__item__titel">Краснодар  </h3><span class="favorites_temp">15&#176;C</span>
 							<img src="img/png/day.png" alt="day" class="item__img">
 							<form action="" class="favorites__item__form">
-								<button class="close">х</button>
+								<button class="close">+</button>
 							</form>
 						</div>
 						<ul class="favorites__item__descr">
 							<li class="item__descr__item">
-								Ветер <span class="wind"> Легкий ветер, 2 м/с, С\З</span>
+								<h4 class="list__item__text"> Ветер </h4><span class="wind"> Легкий ветер, 2 м/с, С\З</span>
 							</li>
 							<li class="item__descr__item">
-								Облачность <span class="cloud">Облачно</span>
+								<h4 class="list__item__text"> Облачность</h4> <span class="cloud">Облачно</span>
 							</li>
 							<li class="item__descr__item">
-								Давление <span class="pressure"> 716 мм.рт.ст.</span>
+								<h4 class="list__item__text"> Давление </h4><span class="pressure"> 716 мм.рт.ст.</span>
 							</li>
 							<li class="item__descr__item">
-								Влажность <span class="humidity"> 208&#176;</span>
+								<h4 class="list__item__text"> Влажность </h4><span class="humidity"> 208&#176;</span>
 							</li>
 							<li class="item__descr__item">
-								Координаты <span class="coordinates"> [ 59.62, 30.22 ]</span>
+								<h4 class="list__item__text"> Координаты </h4><span class="coordinates"> [ 59.62, 30.22 ]</span>
 							</li>
 						</ul>
 					</li>
 					<li class="favorites__item">
 						<div class="favorites__item__header">
-							<h3 class="favorites__item__titel">Краснодар  <span class="favorites_temp">15&#176;C</span> </h3>
+							<h3 class="favorites__item__titel">Воронеж  </h3><span class="favorites_temp">-10&#176;C</span> 
 							<img src="img/png/day.png" alt="day" class="item__img">
 							<form action="" class="favorites__item__form">
-								<button class="close">х</button>
+								<button class="close">+</button>
 							</form>
 						</div>
 						<ul class="favorites__item__descr">
 							<li class="item__descr__item">
-								Ветер <span class="wind"> Легкий ветер, 2 м/с, С\З</span>
+								<h4 class="list__item__text"> Ветер </h4><span class="wind"> Легкий ветер, 2 м/с, С\З</span>
 							</li>
 							<li class="item__descr__item">
-								Облачность <span class="cloud">Облачно</span>
+								<h4 class="list__item__text"> Облачность </h4><span class="cloud">Облачно</span>
 							</li>
 							<li class="item__descr__item">
-								Давление <span class="pressure"> 716 мм.рт.ст.</span>
+								<h4 class="list__item__text"> Давление </h4><span class="pressure"> 716 мм.рт.ст.</span>
 							</li>
 							<li class="item__descr__item">
-								Влажность <span class="humidity"> 208&#176;</span>
+								<h4 class="list__item__text"> Влажность </h4><span class="humidity"> 208&#176;</span>
 							</li>
 							<li class="item__descr__item">
-								Координаты <span class="coordinates"> [ 59.62, 30.22 ]</span>
-							</li>
-						</ul>
-					</li>
-					<li class="favorites__item">
-						<div class="favorites__item__header">
-							<h3 class="favorites__item__titel">Воронеж  <span class="favorites_temp">-10&#176;C</span> </h3>
-							<img src="img/png/day.png" alt="day" class="item__img">
-							<form action="" class="favorites__item__form">
-								<button class="close">х</button>
-							</form>
-						</div>
-						<ul class="favorites__item__descr">
-							<li class="item__descr__item">
-								Ветер <span class="wind"> Легкий ветер, 2 м/с, С\З</span>
-							</li>
-							<li class="item__descr__item">
-								Облачность <span class="cloud">Облачно</span>
-							</li>
-							<li class="item__descr__item">
-								Давление <span class="pressure"> 716 мм.рт.ст.</span>
-							</li>
-							<li class="item__descr__item">
-								Влажность <span class="humidity"> 208&#176;</span>
-							</li>
-							<li class="item__descr__item">
-								Координаты <span class="coordinates"> [ 59.62, 30.22 ]</span>
+								<h4 class="list__item__text"> Координаты </h4><span class="coordinates"> [ 59.62, 30.22 ]</span>
 							</li>
 						</ul>
 					</li>
@@ -242,5 +246,5 @@
 
 
 </body>
-
+	<script type="text/javascript" src="js/main.js"></script>
 </html>
