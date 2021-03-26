@@ -1,72 +1,59 @@
-// if ("geolocation" in navigator) {
-//   console.log("Yes")
-// } else {
-//   console.log("no")
-// }
 
-// navigator.geolocation.getCurrentPosition(function(position) {
-//   console.log(position.coords.latitude, position.coords.longitude);
-// });
-
-// function success(position) {
-//   const latitude  = position.coords.latitude;
-//   const longitude = position.coords.longitude;
-
-//   console.log(latitude, longitude)
-//   // Дальше код, который что-то делает с широтой(latitude) и долготой(longitude)
-// }
-// success()
 function geoFindMe() {
 
-  const status = document.querySelector('#status');
-  const mapLink = document.querySelector('#map-link');
+	const status = document.querySelector('#status');
+	const mapLink = document.querySelector('#map-link');
 
-  mapLink.href = '';
-  mapLink.textContent = '';
+	mapLink.href = '';
+	mapLink.textContent = '';
 
 	function success(position) {
-	const latitude  = position.coords.latitude;
-	const longitude = position.coords.longitude;
+		const latitude  = position.coords.latitude;
+		const longitude = position.coords.longitude;
 
-	status.textContent = '';
-	mapLink.href = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=23b165255fbf21ce4cfa7be39b155b62`;
-	mapLink.textContent = `Широта: ${latitude} °, Долгота: ${longitude} °`;
+		// status.textContent = '';
+		mapLink.href = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=23b165255fbf21ce4cfa7be39b155b62`;
+		// mapLink.textContent = `Широта: ${latitude} °, Долгота: ${longitude} °`;
 	
-
-	fetch(mapLink.href)
-	.then(function(resp) {return resp.json()})
-	.then(function(data){
-		console.log(data);
-		
-		document.querySelector('.info__titel').textContent = data.name;
-		document.querySelector('.temp').innerHTML = Math.round(data.main.temp - 273) + '&deg;C'; 
-		document.querySelector('.wind').textContent = (data.wind.speed) + ' м/с, ' + convertWind(data.wind.deg);
-		document.querySelector('.cloud').textContent = (data.clouds.all) + '%' ;
-		document.querySelector('.pressure').textContent = (data.main.pressure) + ' мм.рт.ст.' ;
-		document.querySelector('.humidity').textContent = (data.main.humidity) + '%' ;
-		document.querySelector('.coordinates').textContent = '[' + (data.coord.lat) + ' , ' + (data.coord.lon) + ']' ;
-
-
-
-
-	}
-	)
-
+		fetch(mapLink.href)
+		.then(function(resp) {return resp.json()})
+		.then(function(data){
+			console.log(data);
+			
+			document.querySelector('.info__titel').textContent = data.name;
+			document.querySelector('.temp').innerHTML = Math.round(data.main.temp - 273) + '&deg;C'; 
+			document.querySelector('.wind').textContent = (data.wind.speed) + ' м/с, ' + convertWind(data.wind.deg);
+			document.querySelector('.cloud').textContent = (data.clouds.all) + '%' ;
+			document.querySelector('.pressure').textContent = (data.main.pressure) + ' мм.рт.ст.' ;
+			document.querySelector('.humidity').textContent = (data.main.humidity) + '%' ;
+			document.querySelector('.coordinates').textContent = '[' + (data.coord.lat) + ' , ' + (data.coord.lon) + ']' ;
+			document.querySelector('.info__img').src = "https://openweathermap.org/img/wn/" + (data.weather[0].icon) + "@2x.png";
+			// https://openweathermap.org/img/wn/02d@2x.png
+		}
+		)
 	}
 
 	function error() {
-	status.textContent = 'Невозможно получить ваше местоположение';
+		mapLink.href = `https://api.openweathermap.org/data/2.5/weather?q=Санкт-Петербург&appid=23b165255fbf21ce4cfa7be39b155b62`;
+
+		fetch(mapLink.href)
+		.then(function(resp) {return resp.json()})
+		.then(function(data){
+			console.log(data);
+			
+			document.querySelector('.info__titel').textContent = data.name;
+			document.querySelector('.temp').innerHTML = Math.round(data.main.temp - 273) + '&deg;C'; 
+			document.querySelector('.wind').textContent = (data.wind.speed) + ' м/с, ' + convertWind(data.wind.deg);
+			document.querySelector('.cloud').textContent = (data.clouds.all) + '%' ;
+			document.querySelector('.pressure').textContent = (data.main.pressure) + ' мм.рт.ст.' ;
+			document.querySelector('.humidity').textContent = (data.main.humidity) + '%' ;
+			document.querySelector('.coordinates').textContent = '[' + (data.coord.lat) + ' , ' + (data.coord.lon) + ']' ;
+			document.querySelector('.info__img').src = "https://openweathermap.org/img/wn/" + (data.weather[0].icon) + "@2x.png";
+		}	
+		)
 	}
-
-	if (!navigator.geolocation) {
-	status.textContent = 'Geolocation не поддерживается вашим браузером';
-	} else {
-	status.textContent = 'Определение местоположения…';
+	
 	navigator.geolocation.getCurrentPosition(success, error);
-
-}
-  
-
 }
 
 function convertWind (wind){
@@ -83,20 +70,17 @@ function convertWind (wind){
 	if ((wind > 270) && (wind <= 315) ) {result += dirs.Nn + '/' + dirs.W;}
 	if ((wind > 315) && (wind <= 360) ) {result +=dirs.N;}
 
-
 	return result;
-
 }
-console.log(convertWind(120));
 
 geoFindMe()
 
 
 document.querySelector('#find-me').addEventListener('click', geoFindMe);
 
-const queryFirst = 'https://community-open-weather-map.p.rapidapi.com/weather?q=';
-const queryKey = 'f61af79d09mshd19f67ed0ff9b9ap186a42jsn7b69284cdb10';
-const rapidapiHost = 'community-open-weather-map.p.rapidapi.com';
+// const queryFirst = 'https://community-open-weather-map.p.rapidapi.com/weather?q=';
+// const queryKey = 'f61af79d09mshd19f67ed0ff9b9ap186a42jsn7b69284cdb10';
+// const rapidapiHost = 'community-open-weather-map.p.rapidapi.com';
 
 
 // async function getWeather (city){
