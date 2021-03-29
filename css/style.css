@@ -187,9 +187,14 @@ html {
 /* main__city style end*/
 
 /* favorites style start*/
+.favorites{
+	padding-bottom: 20px;
+}
 .favorites .wrapper{
 	border-bottom-left-radius: 15px;
 	border-bottom-right-radius: 15px;
+	padding-bottom: 30px;
+	
 }
 .favorites__header {
 	display: flex;
