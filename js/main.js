@@ -1,4 +1,15 @@
 
+document.querySelector("body").onload = function(){
+	setTimeout(function(){
+		var preloader = document.querySelector(".preloader");
+		if (!preloader.classList.contains('done')) {
+			preloader.classList.add('done');
+		}
+	}, 1000);
+}
+
+
+
 
 const weather = {};
 
@@ -78,10 +89,20 @@ function convertWind (wind){
 
 function add_favorites() {
 
+
 	let city = document.querySelector('.favorites__form__input').value;
 
+
+	if (city !== ''){
+		if( localStorage.getItem(city)){
+			window.alert('Такой городу же есть');
+		}
+	}
+	
 	localStorage.setItem(city, city);
-	// let api_city = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}`;
+	
+
+
 	add_city(city);
 	document.querySelector('.favorites__form__input').value = "";
 }
@@ -103,10 +124,12 @@ function add_city(city){
 			weather.hum = (data.main.humidity) + '%' ;
 			weather.coord = '[' + (data.coord.lat) + ' , ' + (data.coord.lon) + ']' ;
 			weather.img = "https://openweathermap.org/img/wn/" + (data.weather[0].icon) + "@2x.png";
+
 		})
-		.then(function(){
+		.then(function(){			
 			displayFav();
-		})
+		})		
+						
 }
 
 
@@ -149,7 +172,7 @@ function displayFav(){
 
 
 function default_add(){
-	const default_city = ['Moscow', 'Saint Petersburg', 'Tyumen', 'Kyiv'];
+	const default_city = ['Москва', 'Крым', 'Тюмень', 'Киев'];
 
 	if(localStorage.length == 0)
 		for (let i = 0; i < default_city.length; i++)
