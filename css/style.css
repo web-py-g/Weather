@@ -255,13 +255,13 @@ html {
 .favorites__item__titel {
 	font-family: 'Rubik';
 	font-weight: bold;
-	font-size: 34px;
+	font-size: 25px;
 	line-height: 50px;
 }
 
 .favorites_temp{
 	font-family: 'Rubik';
-	font-size: 34px;
+	font-size: 30px;
 	font-weight: bold;
 	padding-left: 10px;
 	line-height: 50px;
@@ -284,7 +284,6 @@ html {
 
 .item__img {
 	height: 50px;
-	margin-left: 5px;
 }
 
 .favorites__item_descr{}
@@ -314,41 +313,59 @@ html {
 
 
 @media screen and (max-width: 1160px) {
+	.temp{
+		font-size: 45px;
+	}
 	.header__titel {
 	    font-size: 26px;
 	}
 	.info__titel {
-	    font-size: 24px;
-	}
-	.temp {
-		font-size: 60px;
+	    font-size: 22px;
 	}
 	.favorites__item__titel {
-	    font-size: 26px;
+	    font-size: 22px;
 	}
 	.favorites_temp {
-	    font-size: 26px;
-	    padding-left: 10px;
+	    font-size: 22px;
+	    padding-left: 5px;
 	}
 	.item__img {
 	    margin-left: 0px;
 	}
+	.close {
+	    font-size: 16px;
+	    padding: 8px 12px;
+	}
 
 }
-@media screen and (max-width: 975px) {
-	.favorites__item__titel {
-    	font-size: 22px;
-	}
-	.item__descr__item{
-		font-size: 15px;
-	}
-}
-@media screen and (max-width: 975px) {
+@media screen and (max-width: 1010px) {
 	.favorites__item__titel {
     	font-size: 20px;
 	}
 	.item__descr__item{
 		font-size: 15px;
+	}
+}
+@media screen and (max-width: 975px) {
+	.temp{
+		font-size: 40px;
+	}
+	.favorites__item__titel {
+    	font-size: 18px;
+	}
+	.item__descr__item{
+		font-size: 14px;
+	}
+	.close {
+	    font-size: 14px;
+	    padding: 6px 10px;
+	}
+	.favorites_temp {
+	    font-size: 20px;
+	    padding-left: 2px;
+	}
+	.item__img{
+		height: 45px;
 	}
 }
 @media screen and (max-width: 877px) {
@@ -370,7 +387,7 @@ html {
 	}
 	.temp {
 		padding-top: 30px;
-	    font-size: 50px;
+	    font-size: 40px;
 	}
 
 	.favorites__list {
@@ -420,6 +437,9 @@ html {
 
 }
 @media screen and (max-width: 692px) {
+	.temp{
+		font-size: 50px;
+	}
 
 	.header__titel {
 	    font-size: 20px;
@@ -452,7 +472,6 @@ html {
 	}
 	.temp {
 	    padding-top: 20px;
-	    font-size: 40px;
 	}
 	.time{
 		font-size: 28px;

@@ -14,33 +14,30 @@ document.querySelector('#find-me').addEventListener('click', geoFindMe);
 function geoFindMe() {
 
 	CoordLink = '';
-
-	MainCity = InitParametrs(document.querySelector('.main__city'))
-
 	function success(position) {
 		const latitude  = position.coords.latitude;
 		const longitude = position.coords.longitude;
 
-		CoordLink = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apikey}`;
+		CoordLink = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apikey}&lang=ru`;
 	
 		fetch(CoordLink)
 		.then(function(resp) {return resp.json()})
 		.then(function(data){
 			
 			document.querySelector('.info__titel').textContent = data.name;
-			MainCity.temp.innerHTML = Math.round(data.main.temp - 273) + '&deg;C'; 
-			MainCity.wind.textContent = (data.wind.speed) + ' м/с, ' + convertWind(data.wind.deg);
-			MainCity.cloud.textContent = (data.clouds.all) + '%' ;
-			MainCity.press.textContent = (data.main.pressure) + ' мм.рт.ст.' ;
-			MainCity.humidity.textContent = (data.main.humidity) + '%' ;
-			MainCity.coords.textContent = '[' + (data.coord.lat) + ' , ' + (data.coord.lon) + ']' ;
+			document.querySelector('.temp').innerHTML = Math.round(data.main.temp - 273) + '&deg;C'; 
+			document.querySelector('.wind').textContent = (data.wind.speed) + ' м/с, ' + convertWind(data.wind.deg);
+			document.querySelector('.cloud').textContent = (data.clouds.all) + '%' ;
+			document.querySelector('.pressure').textContent = (data.main.pressure) + ' мм.рт.ст.' ;
+			document.querySelector('.humidity').textContent = (data.main.humidity) + '%' ;
+			document.querySelector('.coordinates').textContent = '[' + (data.coord.lat) + ' , ' + (data.coord.lon) + ']' ;
 			document.querySelector('.info__img').src = "https://openweathermap.org/img/wn/" + (data.weather[0].icon) + "@2x.png";
 		}
 		)
 	}
 
 	function error() {
-		CoordLink = `https://api.openweathermap.org/data/2.5/weather?q=Санкт-Петербург&appid=${apikey}`;
+		CoordLink = `https://api.openweathermap.org/data/2.5/weather?q=Санкт-Петербург&appid=${apikey}&lang=ru`;
 
 		fetch(CoordLink)
 		.then(function(resp) {return resp.json()})
@@ -48,27 +45,17 @@ function geoFindMe() {
 
 			document.querySelector('.info__titel').textContent = data.name;
 			document.querySelector('.temp').innerHTML = Math.round(data.main.temp - 273) + '&deg;C'; 
-			MainCity.wind.textContent = (data.wind.speed) + ' м/с, ' + convertWind(data.wind.deg);
-			MainCity.cloud.textContent = (data.clouds.all) + '%' ;
-			MainCity.press.textContent = (data.main.pressure) + ' мм.рт.ст.' ;
-			MainCity.humidity.textContent = (data.main.humidity) + '%' ;
-			MainCity.coords.textContent = '[' + (data.coord.lat) + ' , ' + (data.coord.lon) + ']' ;
+			document.querySelector('.wind').textContent = (data.wind.speed) + ' м/с, ' + convertWind(data.wind.deg);
+			document.querySelector('.cloud').textContent = (data.clouds.all) + '%' ;
+			document.querySelector('.pressure').textContent = (data.main.pressure) + ' мм.рт.ст.' ;
+			document.querySelector('.humidity').textContent = (data.main.humidity) + '%' ;
+			document.querySelector('.coordinates').textContent = '[' + (data.coord.lat) + ' , ' + (data.coord.lon) + ']' ;
 			document.querySelector('.info__img').src = "https://openweathermap.org/img/wn/" + (data.weather[0].icon) + "@2x.png";
 		}	
 		)
 	}
 	
 	navigator.geolocation.getCurrentPosition(success, error);
-}
-
-function InitParametrs(Alldesc){
-	const keys = ['temp', 'wind', 'cloud', 'press', 'humidity', 'coords'];
-	const items = Alldesc.querySelectorAll('span');
-	const params = {};
-	for (let i = 0; i < keys.length; i += 1) {
-	params[keys[i]] = items[i];
-	}
-	return params;
 }
 
 
@@ -94,14 +81,17 @@ function add_favorites() {
 	let city = document.querySelector('.favorites__form__input').value;
 
 	localStorage.setItem(city, city);
-	let api_city = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}`;
-	add_city(api_city);
+	// let api_city = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}`;
+	add_city(city);
 	document.querySelector('.favorites__form__input').value = "";
 }
 
 
-function add_city(city_api){
-	fetch(city_api)
+function add_city(city){
+	
+	let api_city = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}&lang=ru`;
+
+	fetch(api_city)
 		.then(function(resp) {return resp.json()})
 		.then(function(data){
 			
@@ -146,9 +136,11 @@ function displayFav(){
 	var fav_list = document.querySelector(".favorites__list");
 	fav_list.appendChild(clone);
 
+	console.log(clone.querySelector(".favorites__item__header h3").textContent);
+
 	clone.querySelector('button').onclick = () => {
     	fav_list.removeChild(clone);
-    	if(localStorage.removeItem(clone.querySelector(".favorites__item__header h3").innerHTML)) console.log("YES");
+    	localStorage.removeItem(clone.querySelector(".favorites__item__header h3").textContent);
 	};
 }
 
@@ -164,9 +156,11 @@ function default_add(){
 			localStorage.setItem(default_city[i], default_city[i]);
 				
 	for (let i = 0; i < localStorage.length; i++) {
-		let api_city = `https://api.openweathermap.org/data/2.5/weather?q=${localStorage.key(i)}&appid=${apikey}`;
-		add_city(api_city);
+		add_city(localStorage.key(i));
 	}
 }
 
+
 default_add();
+
+console.log(localStorage)
