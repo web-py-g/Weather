@@ -10,9 +10,7 @@
 
 function loadMain(Parent, loadSelect){
 	const Select = document.querySelector(loadSelect);
-	console.log(Select);
 	const defVal = Select.style.display;
-	console.log(defVal);
 
 	Select.style.display = 'none';
 	const loader = document.getElementById('loader').content.cloneNode(true);
@@ -36,7 +34,6 @@ const apikey = '23b165255fbf21ce4cfa7be39b155b62';
 // geoFindMe();
 
 document.querySelector(".favorites__form button").addEventListener('click', add_favorites);
-document.querySelector('#find-me').addEventListener('click', geoFindMe());
 
 
 
@@ -108,25 +105,28 @@ function convertWind (wind){
 function add_favorites() {
 
 
-	let city = document.querySelector('.favorites__form__input').value;
+	let city = document.querySelector('.favorites__form__input').value.toLowerCase();
 
 
 	if (city !== ''){
 		if( localStorage.getItem(city)){
 			window.alert('Такой городу же есть');
+
+		}
+		else{
+			localStorage.setItem(city, city);
+			add_city(city);
 		}
 	}
 	
-	localStorage.setItem(city, city);
-	
-
-
-	add_city(city);
 	document.querySelector('.favorites__form__input').value = "";
+	
 }
 
 
 function add_city(city){
+
+	city.toLowerCase();
 	
 	let api_city = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}&lang=ru`;
 
@@ -177,7 +177,7 @@ function displayFav(){
 	var fav_list = document.querySelector(".favorites__list");
 	fav_list.appendChild(clone);
 
-	console.log(clone.querySelector(".favorites__item__header h3").textContent);
+	console.log(clone.querySelector(".favorites__item__header h3").textContent.toLowerCase());
 
 	clone.querySelector('button').onclick = () => {
     	fav_list.removeChild(clone);
@@ -190,7 +190,11 @@ function displayFav(){
 
 
 function default_add(){
-	const default_city = ['Москва', 'Крым', 'Тюмень', 'Киев'];
+
+	const refreashCurrentBtn = document.querySelector('.refresh');
+  	refreashCurrentBtn.onclick = () => { loadMain(document.querySelectorAll('section')[0], ".main__city .wrapper"); };
+
+	const default_city = ['москва', 'крым', 'тюмень', 'киев'];
 
 	if(localStorage.length == 0)
 		for (let i = 0; i < default_city.length; i++)
