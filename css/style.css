@@ -58,19 +58,6 @@ html {
 	padding: 0 5%;
 	background-color: #fff;
 }
-
-#loader{
-	position: relative;
-	z-index: 99;
-	transition: 1s all;
-	opacity: 1;
-	visibility: visible;
-}
-.done{
-	opacity: 0;
-	visibility: hidden;
-}
-
 .loader{
 	max-width: 80%;
 	margin: 0 auto;
@@ -79,16 +66,7 @@ html {
 	background-color: #fff;
 	text-align: center;
 	height: 350px;
-/*	width: 75px;
-	height: 75px;
-	border: 10px solid white;
-	border-radius: 50%;
-	border-top-color: #47abff;
-	left: 50%;
-	top: 50%;
-	position: absolute;
-	transform: translate(-50%, -50%);
-	animation: 1s spin infinite linear;*/
+
 }
 
 .loader img{
@@ -96,16 +74,6 @@ html {
 	transform: translate(0, 50%);
 
 }
-
-/*@keyframes spin{
-	from{
-		transform: translate(-50%, -50%) rotate(0deg);
-	}
-	to{
-		transform: translate(-50%, -50%) rotate(360deg);
-
-	}
-}*/
 
 
 /* header style start*/
