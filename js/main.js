@@ -1,24 +1,42 @@
 
-document.querySelector("body").onload = function(){
-	setTimeout(function(){
-		var preloader = document.querySelector(".preloader");
-		if (!preloader.classList.contains('done')) {
-			preloader.classList.add('done');
-		}
-	}, 1000);
+// document.querySelector(".main__city").onload = function(){
+// 	setTimeout(function(){
+// 		var preloader = document.querySelector(".preloader");
+// 		if (!preloader.classList.contains('done')) {
+// 			preloader.classList.add('done');
+// 		}
+// 	}, 1000);
+// }
+
+function loadMain(Parent, loadSelect){
+	const Select = document.querySelector(loadSelect);
+	console.log(Select);
+	const defVal = Select.style.display;
+	console.log(defVal);
+
+	Select.style.display = 'none';
+	const loader = document.getElementById('loader').content.cloneNode(true);
+
+	Parent.appendChild(loader);
+
+	setTimeout(async () => {
+    await geoFindMe();
+    Parent.removeChild(Parent.querySelector('.loader'));
+    Select.style.display = defVal;
+  }, 1000);
 }
 
-
+loadMain(document.querySelectorAll('section')[0], ".main__city .wrapper");
 
 
 const weather = {};
 
 const apikey = '23b165255fbf21ce4cfa7be39b155b62';
 
-geoFindMe()
+// geoFindMe();
 
 document.querySelector(".favorites__form button").addEventListener('click', add_favorites);
-document.querySelector('#find-me').addEventListener('click', geoFindMe);
+document.querySelector('#find-me').addEventListener('click', geoFindMe());
 
 
 
