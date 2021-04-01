@@ -8,7 +8,7 @@
 // 	}, 1000);
 // }
 
-function loadMain(Parent, loadSelect){
+function loadFunc(Parent, loadSelect){
 	const Select = document.querySelector(loadSelect);
 	const defVal = Select.style.display;
 
@@ -24,18 +24,14 @@ function loadMain(Parent, loadSelect){
   }, 1000);
 }
 
-loadMain(document.querySelectorAll('section')[0], ".main__city .wrapper");
+loadFunc(document.querySelectorAll('section')[0], ".main__city .wrapper");
+loadFunc(document.querySelectorAll('section')[1], ".favorites__list");
+
 
 
 const weather = {};
-
 const apikey = '23b165255fbf21ce4cfa7be39b155b62';
-
-// geoFindMe();
-
 document.querySelector(".favorites__form button").addEventListener('click', add_favorites);
-
-
 
 function geoFindMe() {
 
@@ -177,11 +173,9 @@ function displayFav(){
 	var fav_list = document.querySelector(".favorites__list");
 	fav_list.appendChild(clone);
 
-	console.log(clone.querySelector(".favorites__item__header h3").textContent.toLowerCase());
-
 	clone.querySelector('button').onclick = () => {
     	fav_list.removeChild(clone);
-    	localStorage.removeItem(clone.querySelector(".favorites__item__header h3").textContent);
+    	localStorage.removeItem(clone.querySelector(".favorites__item__header h3").textContent.toLowerCase());
 	};
 }
 
@@ -192,7 +186,7 @@ function displayFav(){
 function default_add(){
 
 	const refreashCurrentBtn = document.querySelector('.refresh');
-  	refreashCurrentBtn.onclick = () => { loadMain(document.querySelectorAll('section')[0], ".main__city .wrapper"); };
+  	refreashCurrentBtn.onclick = () => { loadFunc(document.querySelectorAll('section')[0], ".main__city .wrapper"); };
 
 	const default_city = ['москва', 'крым', 'тюмень', 'киев'];
 
