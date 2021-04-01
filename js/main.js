@@ -1,37 +1,7 @@
 
-// document.querySelector(".main__city").onload = function(){
-// 	setTimeout(function(){
-// 		var preloader = document.querySelector(".preloader");
-// 		if (!preloader.classList.contains('done')) {
-// 			preloader.classList.add('done');
-// 		}
-// 	}, 1000);
-// }
-
-function loadFunc(Parent, loadSelect){
-	const Select = document.querySelector(loadSelect);
-	const defVal = Select.style.display;
-
-	Select.style.display = 'none';
-	const loader = document.getElementById('loader').content.cloneNode(true);
-
-	Parent.appendChild(loader);
-
-	setTimeout(async () => {
-    await geoFindMe();
-    Parent.removeChild(Parent.querySelector('.loader'));
-    Select.style.display = defVal;
-  }, 1000);
-}
-
-loadFunc(document.querySelectorAll('section')[0], ".main__city .wrapper");
-loadFunc(document.querySelectorAll('section')[1], ".favorites__list");
-
-
-
 const weather = {};
 const apikey = '23b165255fbf21ce4cfa7be39b155b62';
-document.querySelector(".favorites__form button").addEventListener('click', add_favorites);
+
 
 function geoFindMe() {
 
@@ -100,10 +70,7 @@ function convertWind (wind){
 
 function add_favorites() {
 
-
 	let city = document.querySelector('.favorites__form__input').value.toLowerCase();
-
-
 	if (city !== ''){
 		if( localStorage.getItem(city)){
 			window.alert('Такой городу же есть');
@@ -113,17 +80,14 @@ function add_favorites() {
 			localStorage.setItem(city, city);
 			add_city(city);
 		}
-	}
-	
+	}	
 	document.querySelector('.favorites__form__input').value = "";
-	
 }
 
 
 function add_city(city){
 
 	city.toLowerCase();
-	
 	let api_city = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}&lang=ru`;
 
 	fetch(api_city)
@@ -184,25 +148,42 @@ function displayFav(){
 	};
 }
 
-
-
-
-
 function default_add(){
 
 	const refreashCurrentBtn = document.querySelector('.refresh');
   	refreashCurrentBtn.onclick = () => { loadFunc(document.querySelectorAll('section')[0], ".main__city .wrapper"); };
 
-	const default_city = ['москва', 'крым', 'тюмень', 'киев'];
+  	const addBut = document.querySelector(".favorites__form button");
+  	addBut.onclick = () => {add_favorites();};
 
+	const default_city = ['москва', 'крым', 'тюмень', 'киев'];
 	if(localStorage.length == 0)
 		for (let i = 0; i < default_city.length; i++)
 			localStorage.setItem(default_city[i], default_city[i]);
-				
+
 	for (let i = 0; i < localStorage.length; i++) {
 		add_city(localStorage.key(i));
 	}
 }
+
+function loadFunc(Parent, loadSelect){
+	const Select = document.querySelector(loadSelect);
+	const defVal = Select.style.display;
+
+	Select.style.display = 'none';
+	const loader = document.getElementById('loader').content.cloneNode(true);
+
+	Parent.appendChild(loader);
+
+	setTimeout(async () => {
+    await geoFindMe();
+    Parent.removeChild(Parent.querySelector('.loader'));
+    Select.style.display = defVal;
+  }, 1000);
+}
+
+loadFunc(document.querySelectorAll('section')[0], ".main__city .wrapper");
+loadFunc(document.querySelectorAll('section')[1], ".favorites__list");
 
 
 default_add();
