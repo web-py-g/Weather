@@ -3,6 +3,22 @@ const weather = {};
 const apikey = '23b165255fbf21ce4cfa7be39b155b62';
 
 
+function fetchLoad(Link){
+	fetch(Link)
+		.then(function(resp) {return resp.json()})
+		.then(function(data){	
+			document.querySelector('.info__titel').textContent = data.name;
+			document.querySelector('.temp').innerHTML = Math.round(data.main.temp - 273) + '&deg;C'; 
+			document.querySelector('.wind').textContent = (data.wind.speed) + ' м/с, ' + convertWind(data.wind.deg);
+			document.querySelector('.cloud').textContent = (data.clouds.all) + '%' ;
+			document.querySelector('.pressure').textContent = (data.main.pressure) + ' мм.рт.ст.' ;
+			document.querySelector('.humidity').textContent = (data.main.humidity) + '%' ;
+			document.querySelector('.coordinates').textContent = '[' + (data.coord.lat) + ' , ' + (data.coord.lon) + ']' ;
+			document.querySelector('.info__img').src = "https://openweathermap.org/img/wn/" + (data.weather[0].icon) + "@2x.png";
+		})
+}
+
+
 function geoFindMe() {
 
 	CoordLink = '';
@@ -11,40 +27,12 @@ function geoFindMe() {
 		const longitude = position.coords.longitude;
 
 		CoordLink = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apikey}&lang=ru`;
-	
-		fetch(CoordLink)
-		.then(function(resp) {return resp.json()})
-		.then(function(data){
-			
-			document.querySelector('.info__titel').textContent = data.name;
-			document.querySelector('.temp').innerHTML = Math.round(data.main.temp - 273) + '&deg;C'; 
-			document.querySelector('.wind').textContent = (data.wind.speed) + ' м/с, ' + convertWind(data.wind.deg);
-			document.querySelector('.cloud').textContent = (data.clouds.all) + '%' ;
-			document.querySelector('.pressure').textContent = (data.main.pressure) + ' мм.рт.ст.' ;
-			document.querySelector('.humidity').textContent = (data.main.humidity) + '%' ;
-			document.querySelector('.coordinates').textContent = '[' + (data.coord.lat) + ' , ' + (data.coord.lon) + ']' ;
-			document.querySelector('.info__img').src = "https://openweathermap.org/img/wn/" + (data.weather[0].icon) + "@2x.png";
-		}
-		)
+		fetchLoad(CoordLink);
 	}
 
 	function error() {
 		CoordLink = `https://api.openweathermap.org/data/2.5/weather?q=Санкт-Петербург&appid=${apikey}&lang=ru`;
-
-		fetch(CoordLink)
-		.then(function(resp) {return resp.json()})
-		.then(function(data){
-
-			document.querySelector('.info__titel').textContent = data.name;
-			document.querySelector('.temp').innerHTML = Math.round(data.main.temp - 273) + '&deg;C'; 
-			document.querySelector('.wind').textContent = (data.wind.speed) + ' м/с, ' + convertWind(data.wind.deg);
-			document.querySelector('.cloud').textContent = (data.clouds.all) + '%' ;
-			document.querySelector('.pressure').textContent = (data.main.pressure) + ' мм.рт.ст.' ;
-			document.querySelector('.humidity').textContent = (data.main.humidity) + '%' ;
-			document.querySelector('.coordinates').textContent = '[' + (data.coord.lat) + ' , ' + (data.coord.lon) + ']' ;
-			document.querySelector('.info__img').src = "https://openweathermap.org/img/wn/" + (data.weather[0].icon) + "@2x.png";
-		}	
-		)
+		fetchLoad(CoordLink);
 	}
 	
 	navigator.geolocation.getCurrentPosition(success, error);
@@ -68,112 +56,135 @@ function convertWind (wind){
 	return result;
 }
 
-function add_favorites() {
+function addFavorites() {
 
 	let city = document.querySelector('.favorites__form__input').value.toLowerCase();
-	if (city !== ''){
-		if( localStorage.getItem(city)){
-			window.alert('Такой городу же есть');
-
-		}
-		else{
-			localStorage.setItem(city, city);
-			add_city(city);
-		}
+	if (city !== ''){		
+		addCity(city, 1);
 	}	
 	document.querySelector('.favorites__form__input').value = "";
 }
 
 
-function add_city(city){
+function addCity(city, flag){
+
+	let apiCity ='';
 
 	city.toLowerCase();
-	let api_city = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}&lang=ru`;
 
-	fetch(api_city)
+
+
+	if (parseInt(city)) {
+		console.log('id');
+		apiCity = `https://api.openweathermap.org/data/2.5/weather?id=${city}&appid=${apikey}&lang=ru`;				
+	}
+	else{
+		console.log('name');
+
+		apiCity = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}&lang=ru`;		
+	}
+
+
+	fetch(apiCity)
 	.then(function(resp) {
 		if (resp.status != 200) {
 			localStorage.removeItem(city);
-			window.alert('Данного города нет!');
+			window.alert('Данный город не найден!');
 			return null;
 		}
 		return resp.json();
 	})
 	.then(function(data){
-		
-		weather.city = data.name;
-		weather.temp = Math.round(data.main.temp - 273) + '&deg;C'; 
-		weather.wind = (data.wind.speed) + ' м/с, ' + convertWind(data.wind.deg);
-		weather.cloud = (data.clouds.all) + '%' ;
-		weather.pres = (data.main.pressure) + ' мм.рт.ст.' ;
-		weather.hum = (data.main.humidity) + '%' ;
-		weather.coord = '[' + (data.coord.lat) + ' , ' + (data.coord.lon) + ']' ;
-		weather.img = "https://openweathermap.org/img/wn/" + (data.weather[0].icon) + "@2x.png";
 
+		if (((localStorage.getItem(data.id)) && (flag == 0)) || (!localStorage.getItem(data.id)) ) {
+			weather.city = data.name;
+			weather.temp = Math.round(data.main.temp - 273) + '&deg;C'; 
+			weather.wind = (data.wind.speed) + ' м/с, ' + convertWind(data.wind.deg);
+			weather.cloud = (data.clouds.all) + '%' ;
+			weather.pres = (data.main.pressure) + ' мм.рт.ст.' ;
+			weather.hum = (data.main.humidity) + '%' ;
+			weather.coord = '[' + (data.coord.lat) + ' , ' + (data.coord.lon) + ']' ;
+			weather.img = "https://openweathermap.org/img/wn/" + (data.weather[0].icon) + "@2x.png";
+			weather.id = data.id;
+
+			localStorage.setItem(weather.id, weather.city);
+
+			displayFav();
+		}
+		else if((localStorage.getItem(data.id)) && (flag == 1)) {
+			console.log('Такой город уже есть');
+
+		}
+		
 	})
-	.then(function(){			
-		displayFav();
-	})	
 }
 
 
 function displayFav(){
 	const template = document.querySelector('#favorites__card');
 
-	const CityElem = template.content.querySelector(".favorites__item__titel");
-	const IconElem = template.content.querySelector(".item__img");
-	const TempElem = template.content.querySelector(".favorites_temp");
-	const WindElem = template.content.querySelector(".wind");
-	const CloudElem = template.content.querySelector(".cloud");
-	const PresElem = template.content.querySelector(".pressure");
-	const HumElem = template.content.querySelector(".humidity");
-	const CoordElem = template.content.querySelector(".coordinates");
+	const cityElem = template.content.querySelector(".favorites__item__titel");
+	const iconElem = template.content.querySelector(".item__img");
+	const tempElem = template.content.querySelector(".favorites_temp");
+	const windElem = template.content.querySelector(".wind");
+	const cloudElem = template.content.querySelector(".cloud");
+	const presElem = template.content.querySelector(".pressure");
+	const humElem = template.content.querySelector(".humidity");
+	const coordElem = template.content.querySelector(".coordinates");
+	const idElem = template.content.querySelector(".idCity");
+
 	
-	CityElem.textContent = weather.city;
-	IconElem.src = weather.img;
-	TempElem.innerHTML = weather.temp;
-	WindElem.innerHTML = weather.wind;
-	CloudElem.innerHTML = weather.cloud;
-	PresElem.innerHTML = weather.pres;
-	HumElem.innerHTML = weather.hum;
-	CoordElem.innerHTML = weather.coord;
+	cityElem.textContent = weather.city;
+	iconElem.src = weather.img;
+	tempElem.innerHTML = weather.temp;
+	windElem.innerHTML = weather.wind;
+	cloudElem.innerHTML = weather.cloud;
+	presElem.innerHTML = weather.pres;
+	humElem.innerHTML = weather.hum;
+	coordElem.innerHTML = weather.coord;
+	idElem.innerHTML = weather.id;
+
+
 
 	var clone = template.content.querySelector("li").cloneNode(true);
-	var fav_list = document.querySelector(".favorites__list");
-	fav_list.appendChild(clone);
+	var favList = document.querySelector(".favorites__list");
+	favList.appendChild(clone);
 
 	clone.querySelector('button').onclick = () => {
-    	fav_list.removeChild(clone);
-    	localStorage.removeItem(clone.querySelector(".favorites__item__header h3").textContent.toLowerCase());
+    	favList.removeChild(clone);
+    	localStorage.removeItem(clone.querySelector(".idCity").textContent);
 	};
 }
 
-function default_add(){
+function defaultAdd(){
 
 	const refreashCurrentBtn = document.querySelector('.refresh');
   	refreashCurrentBtn.onclick = () => { loadFunc(document.querySelectorAll('section')[0], ".main__city .wrapper"); };
 
   	const addBut = document.querySelector(".favorites__form button");
-  	addBut.onclick = () => {add_favorites();};
+  	addBut.onclick = () => {addFavorites();};
 
-	const default_city = ['москва', 'крым', 'тюмень', 'киев'];
+	const defaultCity = ['москва', 'крым', 'тюмень', 'киев'];
+	const defaultCityId = ['524901', '540259', '1488754', '703448'];
+
 	if(localStorage.length == 0)
-		for (let i = 0; i < default_city.length; i++)
-			localStorage.setItem(default_city[i], default_city[i]);
+		for (let i = 0; i < defaultCity.length; i++)
+			localStorage.setItem(defaultCityId[i], defaultCity[i]);
+
 
 	for (let i = 0; i < localStorage.length; i++) {
-		add_city(localStorage.key(i));
+		addCity(localStorage.key(i), 0);
 	}
 }
 
-function loadFunc(Parent, loadSelect){
+function loadMainFunc(Parent, loadSelect){
 	const Select = document.querySelector(loadSelect);
 	const defVal = Select.style.display;
 
 	Select.style.display = 'none';
 	const loader = document.getElementById('loader').content.cloneNode(true);
 
-	Parent.appendChild(loader);
+	Parent.append(loader);
 
 	setTimeout(async () => {
     await geoFindMe();
@@ -182,8 +193,10 @@ function loadFunc(Parent, loadSelect){
   }, 1000);
 }
 
-loadFunc(document.querySelectorAll('section')[0], ".main__city .wrapper");
-loadFunc(document.querySelectorAll('section')[1], ".favorites__list");
+loadMainFunc(document.querySelectorAll('section')[0], ".main__city .wrapper");
 
 
-default_add();
+loadMainFunc(document.querySelectorAll('section')[1], ".favorites__list");
+
+
+defaultAdd();

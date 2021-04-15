@@ -21,7 +21,6 @@
 
 
 	<header class="header">
-		<div class="wrapper">
 			<h1 class="header__titel">
 				Погода здесь
 			</h1>
@@ -34,7 +33,6 @@
 					
 				</i>
 			</form>
-		</div>
 	</header>
 	<main>
 		
@@ -50,27 +48,27 @@
 
 				<div class="main__city__desc">
 					<ul class="desc__list">
-						<li class="desc__list__item">
-							<h4 class="list__item__text">Ветер </h4><span class="wind"></span>
+						<li>
+							<h4>Ветер </h4><span class="wind"></span>
 						</li>
-						<li class="desc__list__item">
-							<h4 class="list__item__text">Облачность </h4><span class="cloud"></span>
+						<li>
+							<h4>Облачность </h4><span class="cloud"></span>
 						</li>
-						<li class="desc__list__item">
-							<h4 class="list__item__text">Давление </h4><span class="pressure"></span>
+						<li>
+							<h4>Давление </h4><span class="pressure"></span>
 						</li>
-						<li class="desc__list__item">
-							<h4 class="list__item__text">Влажность </h4><span class="humidity"></span>
+						<li>
+							<h4>Влажность </h4><span class="humidity"></span>
 						</li>
-						<li class="desc__list__item">
-							<h4 class="list__item__text">Координаты </h4><span class="coordinates"></span>
+						<li>
+							<h4>Координаты </h4><span class="coordinates"></span>
 						</li>
 					</ul>
 				</div>
 			</div>
 		</section>
-		<section class="favorites">
-			<div class="wrapper">
+
+		<section class="favorites wrapper">
 				<div class="favorites__header">
 					<h2 class="favorites__header__titel">
 						Избранное:
@@ -94,38 +92,28 @@
 							</div>
 							<ul class="favorites__item__descr">
 								<li class="item__descr__item">
-									<h4 class="list__item__text"> Ветер </h4><span class="wind"></span>
+									<h4> Ветер </h4><span class="wind"></span>
 								</li>
 								<li class="item__descr__item">
-									<h4 class="list__item__text"> Облачность </h4><span class="cloud"></span>
+									<h4> Облачность </h4><span class="cloud"></span>
 								</li>
 								<li class="item__descr__item">
-									<h4 class="list__item__text"> Давление </h4><span class="pressure"></span>
+									<h4> Давление </h4><span class="pressure"></span>
 								</li>
 								<li class="item__descr__item">
-									<h4 class="list__item__text"> Влажность </h4><span class="humidity"></span>
+									<h4> Влажность </h4><span class="humidity"></span>
 								</li>
 								<li class="item__descr__item">
-									<h4 class="list__item__text"> Координаты </h4><span class="coordinates"></span>
+									<h4> Координаты </h4><span class="coordinates"></span><span class="idCity"></span>
 								</li>
 							</ul>
 						</li>
 					</template>
 					
 				</ul>
-
-			</div>
-		</section>
-
-		
-
-		<template id="loader">
-			
-		</template>
-
+		</section>	
+		<template id="loader"></template>
 	</main>
-
-
 </body>
 	<script type="text/javascript" src="js/main.js"></script>
 </html>
