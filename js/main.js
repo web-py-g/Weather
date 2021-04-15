@@ -56,36 +56,34 @@ function convertWind (wind){
 	return result;
 }
 
-function addFavorites() {
+async function addFavorites() {
+
+	let cityData= '';
 
 	let city = document.querySelector('.favorites__form__input').value.toLowerCase();
 	if (city !== ''){		
-		addCity(city, 1);
+		cityData = await getApi(city);
+		addCity(cityData , 1);
+
 	}	
 	document.querySelector('.favorites__form__input').value = "";
 }
 
+async function getApi (city){
 
-function addCity(city, flag){
 
+	let dataCity = '';
 	let apiCity ='';
 
-	city.toLowerCase();
-
-
-
 	if (parseInt(city)) {
-		console.log('id');
 		apiCity = `https://api.openweathermap.org/data/2.5/weather?id=${city}&appid=${apikey}&lang=ru`;				
 	}
 	else{
-		console.log('name');
-
 		apiCity = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}&lang=ru`;		
 	}
 
 
-	fetch(apiCity)
+	await fetch(apiCity)
 	.then(function(resp) {
 		if (resp.status != 200) {
 			localStorage.removeItem(city);
@@ -94,29 +92,39 @@ function addCity(city, flag){
 		}
 		return resp.json();
 	})
-	.then(function(data){
+	.then((data) => {
+    	dataCity = data;
+  	});
 
-		if (((localStorage.getItem(data.id)) && (flag == 0)) || (!localStorage.getItem(data.id)) ) {
-			weather.city = data.name;
-			weather.temp = Math.round(data.main.temp - 273) + '&deg;C'; 
-			weather.wind = (data.wind.speed) + ' м/с, ' + convertWind(data.wind.deg);
-			weather.cloud = (data.clouds.all) + '%' ;
-			weather.pres = (data.main.pressure) + ' мм.рт.ст.' ;
-			weather.hum = (data.main.humidity) + '%' ;
-			weather.coord = '[' + (data.coord.lat) + ' , ' + (data.coord.lon) + ']' ;
-			weather.img = "https://openweathermap.org/img/wn/" + (data.weather[0].icon) + "@2x.png";
-			weather.id = data.id;
+  	return dataCity;
 
-			localStorage.setItem(weather.id, weather.city);
+}
 
-			displayFav();
-		}
-		else if((localStorage.getItem(data.id)) && (flag == 1)) {
-			console.log('Такой город уже есть');
 
-		}
-		
-	})
+async function addCity(city, flag){
+
+	let data = city;
+
+
+	if (((localStorage.getItem(data.id)) && (flag == 0)) || (!localStorage.getItem(data.id)) ) {
+		weather.city = data.name;
+		weather.temp = Math.round(data.main.temp - 273) + '&deg;C'; 
+		weather.wind = (data.wind.speed) + ' м/с, ' + convertWind(data.wind.deg);
+		weather.cloud = (data.clouds.all) + '%' ;
+		weather.pres = (data.main.pressure) + ' мм.рт.ст.' ;
+		weather.hum = (data.main.humidity) + '%' ;
+		weather.coord = '[' + (data.coord.lat) + ' , ' + (data.coord.lon) + ']' ;
+		weather.img = "https://openweathermap.org/img/wn/" + (data.weather[0].icon) + "@2x.png";
+		weather.id = data.id;
+
+		localStorage.setItem(weather.id, weather.city);
+
+		displayFav();
+	}
+	else if((localStorage.getItem(data.id)) && (flag == 1)) {
+		window.alert('Такой город уже есть');
+
+	}
 }
 
 
@@ -156,7 +164,7 @@ function displayFav(){
 	};
 }
 
-function defaultAdd(){
+async function defaultAdd(){
 
 	const refreashCurrentBtn = document.querySelector('.refresh');
   	refreashCurrentBtn.onclick = () => { loadFunc(document.querySelectorAll('section')[0], ".main__city .wrapper"); };
@@ -172,8 +180,20 @@ function defaultAdd(){
 			localStorage.setItem(defaultCityId[i], defaultCity[i]);
 
 
-	for (let i = 0; i < localStorage.length; i++) {
-		addCity(localStorage.key(i), 0);
+	let localArray =[];
+
+	for(let i=0; i<localStorage.length; i++) {
+	  let key = localStorage.key(i);
+	  localArray.push([key, localStorage.getItem(key)]);
+	}
+
+	let weatherResponses = await Promise.all(localArray.map((item) => 
+        getApi(item[0])
+    ));
+
+
+	for (let i = 0; i < weatherResponses.length; i++) {
+		addCity(weatherResponses[i], 0);
 	}
 }
 
