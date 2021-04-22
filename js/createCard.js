@@ -56,7 +56,6 @@ function displayFav(){
 	const coordElem = template.content.querySelector(".coordinates");
 	const idElem = template.content.querySelector(".idCity");
 
-	
 	cityElem.textContent = weather.city;
 	iconElem.src = weather.img;
 	tempElem.innerHTML = weather.temp;
@@ -67,10 +66,12 @@ function displayFav(){
 	coordElem.innerHTML = weather.coord;
 	idElem.innerHTML = weather.id;
 
-
-
 	var clone = template.content.querySelector("li").cloneNode(true);
+
+	const loaderCard = clone.getElementById('loader');
+
 	var favList = document.querySelector(".favorites__list");
+
 	favList.appendChild(clone);
 
 	clone.querySelector('button').onclick = () => {

@@ -14,6 +14,7 @@ function loadMainFunc(Parent, loadSelect){
   }, 1000);
 }
 
+
 loadMainFunc(document.querySelectorAll('section')[0], ".main__city .wrapper");
 
 
