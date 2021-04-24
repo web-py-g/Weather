@@ -15,8 +15,6 @@ async function addCity(city){
     displayFav(weather);
 }
 
-
-
 function convertWind (wind){
     const dirs = {N: 'С', W: 'З', E: 'В', S: 'Ю'};
     let result = '';
@@ -48,12 +46,7 @@ async function displayFav(weather){
     const coordElem = template.content.querySelector(".coordinates");
     const idElem = template.content.querySelector(".idCity");
 
-    console.log(weather);
-
     cityElem.textContent = weather.cityName;
-    console.log(cityElem);
-    console.log(cityElem.textContent);
-
     iconElem.src = weather.icon;
     tempElem.innerHTML = weather.temp;
     windElem.innerHTML = weather.wind;
@@ -83,7 +76,6 @@ async function addFavorites() {
     let newCity = document.querySelector('.favorites__form__input').value.toLowerCase();
     
     if (newCity !== '') {
-        console.log(`${serverURL}favourites?city=${newCity}`);
         
         try {
 
@@ -91,7 +83,6 @@ async function addFavorites() {
                 method: 'POST'
             });
             const result = await resultRes.json();
-            console.log(result);
             if (result.cityName !== undefined) {
               await addCity(`weather/city?q=${result.cityName}`);
             }
@@ -123,10 +114,10 @@ async function geoFindMe() {
     CoordLink = '';
     async function success(position) {
         
-        const mainRes = await fetch(`${serverURL}weather/coordinates?lat=${position.coords.latitude}&long=${position.coords.longitude}`, {
+        const mainRes = await fetch(`${serverURL}weather/coordinates?lat=${position.coords.latitude}&lon=${position.coords.longitude}`, {
             method: 'GET'
         });
-        const mainCity = await mainRes.json()
+        const mainCity = await mainRes.json();
 
         fetchLoad(mainCity);
     }
@@ -137,7 +128,7 @@ async function geoFindMe() {
             method: 'GET'
         });
 
-        const mainCity = await mainRes.json()
+        const mainCity = await mainRes.json();
 
         fetchLoad(mainCity);
     }
