@@ -12,8 +12,36 @@ async function addCity(city){
     });
     weather = await weatherReq.json();
 
+
+    console.log(weather);
+
+    // if (((localStorage.getItem(data.id)) && (flag == 0)) || (!localStorage.getItem(data.id)) ) {
+    //  weather.city = data.name;
+    //  weather.temp = Math.round(data.main.temp - 273) + '&deg;C'; 
+    //  weather.wind = (data.wind.speed) + ' м/с, ' + convertWind(data.wind.deg);
+    //  weather.cloud = (data.clouds.all) + '%' ;
+    //  weather.pres = (data.main.pressure) + ' мм.рт.ст.' ;
+    //  weather.hum = (data.main.humidity) + '%' ;
+    //  weather.coord = '[' + (data.coord.lat) + ' , ' + (data.coord.lon) + ']' ;
+    //  weather.img = "https://openweathermap.org/img/wn/" + (data.weather[0].icon) + "@2x.png";
+    //  weather.id = data.id;
+
+    //  localStorage.setItem(weather.id, weather.city);
+
     displayFav(weather);
+    // }
+    // else if((localStorage.getItem(data.id)) && (flag == 1)) {
+    //  window.alert('Такой город уже есть');
+
+    // }
 }
+
+
+
+
+
+
+
 
 function convertWind (wind){
     const dirs = {N: 'С', W: 'З', E: 'В', S: 'Ю'};
@@ -46,14 +74,21 @@ async function displayFav(weather){
     const coordElem = template.content.querySelector(".coordinates");
     const idElem = template.content.querySelector(".idCity");
 
+    console.log(weather);
+
     cityElem.textContent = weather.cityName;
+    console.log(cityElem);
+    console.log(cityElem.textContent);
+
+
+
     iconElem.src = weather.icon;
     tempElem.innerHTML = weather.temp;
     windElem.innerHTML = weather.wind;
     cloudElem.innerHTML = weather.cloud;
     presElem.innerHTML = weather.pressure;
     humElem.innerHTML = weather.humidity;
-    coordElem.innerHTML = `[${(weather.coords.lat)} , ${weather.coords.lon}]`;
+    coordElem.innerHTML = '[' + (weather.coords.lat) + ' , ' + (weather.coords.lon) + ']';
     idElem.innerHTML = weather.id;
 
     var clone = template.content.querySelector("li").cloneNode(true);
@@ -76,6 +111,7 @@ async function addFavorites() {
     let newCity = document.querySelector('.favorites__form__input').value.toLowerCase();
     
     if (newCity !== '') {
+        console.log(`${serverURL}favourites?city=${newCity}`);
         
         try {
 
@@ -83,6 +119,7 @@ async function addFavorites() {
                 method: 'POST'
             });
             const result = await resultRes.json();
+            console.log(result);
             if (result.cityName !== undefined) {
               await addCity(`weather/city?q=${result.cityName}`);
             }
@@ -114,10 +151,10 @@ async function geoFindMe() {
     CoordLink = '';
     async function success(position) {
         
-        const mainRes = await fetch(`${serverURL}weather/coordinates?lat=${position.coords.latitude}&lon=${position.coords.longitude}`, {
+        const mainRes = await fetch(`${serverURL}weather/coordinates?lat=${position.coords.latitude}&long=${position.coords.longitude}`, {
             method: 'GET'
         });
-        const mainCity = await mainRes.json();
+        const mainCity = await mainRes.json()
 
         fetchLoad(mainCity);
     }
@@ -128,7 +165,7 @@ async function geoFindMe() {
             method: 'GET'
         });
 
-        const mainCity = await mainRes.json();
+        const mainCity = await mainRes.json()
 
         fetchLoad(mainCity);
     }
@@ -140,7 +177,7 @@ async function geoFindMe() {
 async function defaultAdd(){
 
     const refreashCurrentBtn = document.querySelector('.refresh');
-    refreashCurrentBtn.onclick = () => {loadFunc(document.querySelectorAll('section')[0], ".main__city .wrapper")};
+    refreashCurrentBtn.onclick = () => {loadMainFunc(document.querySelectorAll('section')[0], ".main__city .wrapper")};
      
     const addBut = document.querySelector(".favorites__form button");
     let newCity = document.querySelector('.favorites__form__input').value.toLowerCase();
