@@ -65,7 +65,6 @@ async function displayFav(weather){
     favList.appendChild(clone);
 
     clone.append(loader);
-    console.log(clone);
     const div = clone.querySelector('.favorites__item__header');
     const ul = clone.querySelector('ul');
     
@@ -91,19 +90,24 @@ async function addFavorites() {
     let cityData= '';
 
     let newCity = document.querySelector('.favorites__form__input').value.toLowerCase();
+    document.querySelector('.favorites__form__input').value = "";
     
     if (newCity !== '') {        
-      
-        const resultRes = await fetch(`${serverURL}favourites?city=${newCity}`, {
-            method: 'POST'
-        });
-        const result = await resultRes.json();
-        if (result.cityName !== undefined) {
-          await addCity(`weather/city?q=${result.cityName}`);
+        try{
+            const resultRes = await fetch(`${serverURL}favourites?city=${newCity}`, {
+                method: 'POST'
+            });
+            const result = await resultRes.text();
+            if (result !== undefined) {
+                await addCity(`weather/city?q=${newCity}`);
+            }
+        }
+        catch{
+            window.alert('Citi is not found');
         }
        
     }
-    document.querySelector('.favorites__form__input').value = "";
+    
 }
 
 
@@ -115,7 +119,7 @@ function fetchLoad(mainCity){
     document.querySelector('.cloud').textContent = mainCity.cloud;
     document.querySelector('.pressure').textContent = mainCity.pressure;
     document.querySelector('.humidity').textContent = mainCity.humidity;
-    document.querySelector('.coordinates').textContent = '[' + (mainCity.coords.lat) + ' , ' + (mainCity.coords.lon) + ']' ;
+    document.querySelector('.coordinates').textContent = `[${(mainCity.coords.lat)}, ${(mainCity.coords.lon)}]`;
     document.querySelector('.info__img').src = mainCity.icon;
         
 }
@@ -130,7 +134,6 @@ async function geoFindMe() {
             method: 'GET'
         });
         const mainCity = await mainRes.json()
-
         fetchLoad(mainCity);
     }
 
@@ -139,12 +142,9 @@ async function geoFindMe() {
         const mainRes = await fetch(`${serverURL}weather/city?q=Saint Petersburg`, {
             method: 'GET'
         });
-
         const mainCity = await mainRes.json()
-
         fetchLoad(mainCity);
-    }
-    
+    } 
     navigator.geolocation.getCurrentPosition(success, error);
 }
 
@@ -154,10 +154,11 @@ async function defaultAdd(){
     const refreashCurrentBtn = document.querySelector('.refresh');
     refreashCurrentBtn.onclick = () => {loadMainFunc(document.querySelectorAll('section')[0], ".main__city .wrapper")};
      
-    const addBut = document.querySelector(".favorites__form button");
-    let newCity = document.querySelector('.favorites__form__input').value.toLowerCase();
-
-    addBut.onclick = () => {addFavorites();};
+    const addBut = document.querySelector(".add");
+    addBut.onclick = async (e) => {
+        e.preventDefault();
+        await addFavorites();
+    };
 
     const favRes = await fetch(`${serverURL}favourites`, {
         method: 'GET'
@@ -165,8 +166,8 @@ async function defaultAdd(){
     
     const favArray = await favRes.json();
 
-    favArray.map(item => {
-        displayFav(item);
+    favArray.map( async item => {
+        await displayFav(item);
       });
 
 }
